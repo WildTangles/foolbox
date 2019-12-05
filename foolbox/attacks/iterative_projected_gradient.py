@@ -237,11 +237,6 @@ class AdamOptimizerMixin(object):
     def _create_optimizer(self, a, stepsize):
         return AdamOptimizer(a.unperturbed.shape, a.unperturbed.dtype, stepsize)
 
-
-class NormalizedGDOptimizerMixin(object):
-    def _create_optimizer(self, a, stepsize):
-        return NormalizedGDOptimizer(stepsize)
-
 class LinfinityGradientMixin(object):
     def _gradient(self, a, x, class_, strict=True, gradient_args={}):
         gradient = yield from a.gradient_one(x, class_, strict=strict)
@@ -681,33 +676,14 @@ class L2BasicIterativeAttack(
 
 
 class NormalizedProjectedGradientDescentAttack(
-    LinfinityGradientMixin,
-    LinfinityClippingMixin,
-    LinfinityDistanceCheckMixin,
-    NormalizedGDOptimizerMixin,
+    L2GradientMixin,
+    L2ClippingMixin,
+    L2DistanceCheckMixin,
+    GDOptimizerMixin,
     IterativeProjectedGradientBaseAttack,
 ):
 
-    """The Projected Gradient Descent Attack
-    introduced in [1]_ without random start.
-
-    When used without a random start, this attack
-    is also known as Basic Iterative Method (BIM)
-    or FGSM^k.
-
-    References
-    ----------
-    .. [1] Aleksander Madry, Aleksandar Makelov, Ludwig Schmidt,
-           Dimitris Tsipras, Adrian Vladu, "Towards Deep Learning
-           Models Resistant to Adversarial Attacks",
-           https://arxiv.org/abs/1706.06083
-
-    .. seealso::
-
-       :class:`LinfinityBasicIterativeAttack` and
-       :class:`RandomStartProjectedGradientDescentAttack`
-
-    """
+    #PGD but in L2 instead of Linf
 
     @generator_decorator
     def as_generator(
