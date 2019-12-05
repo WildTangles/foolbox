@@ -27,6 +27,31 @@ class GDOptimizer:
 
         return -self._learning_rate * gradient
 
+class NormalizedGDOptimizer:
+    """
+    GD but normalize gradient before step
+    """
+    def __init__(self, learning_rate):
+        self._learning_rate = learning_rate
+
+    def __call__(self, gradient):
+        """Updates internal parameters of the optimizer and returns
+        the change that should be applied to the variable.
+
+        Parameters
+        ----------
+        gradient : `np.ndarray`
+            the gradient of the loss w.r.t. to the variable
+        """
+
+        #normalize gradient
+        assert(len(gradient.shape) == 3)
+        
+        gradient_norm = np.linalg.norm(gradient)
+        gradient = gradient/(gradient_norm + 1e-10)
+
+        #apply gradient descent step
+        return -self._learning_rate * gradient
 
 class AdamOptimizer:
     """Basic Adam optimizer implementation that can minimize w.r.t.

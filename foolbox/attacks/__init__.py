@@ -39,6 +39,7 @@ from .iterative_projected_gradient import L1BasicIterativeAttack
 from .iterative_projected_gradient import L2BasicIterativeAttack
 
 from .iterative_projected_gradient import (
+    NormalizedProjectedGradientDescentAttack,
     ProjectedGradientDescentAttack,
     ProjectedGradientDescent,
     PGD,
