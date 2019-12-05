@@ -10,7 +10,6 @@ from ..utils import crossentropy
 from .. import nprng
 from ..optimizers import AdamOptimizer
 from ..optimizers import GDOptimizer
-from ..optimizers import NormalizedGDOptimizer
 
 
 class IterativeProjectedGradientBaseAttack(Attack):
