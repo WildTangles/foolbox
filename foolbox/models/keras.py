@@ -40,6 +40,7 @@ class KerasModel(DifferentiableModel):
         channel_axis="auto",
         preprocessing=(0, 1),
         predicts="probabilities",
+        force_softmax_calculation=False
     ):
         from keras import backend as K
 
@@ -75,7 +76,7 @@ class KerasModel(DifferentiableModel):
         self._num_classes = num_classes
 
         if predicts == "probabilities":
-            if K.backend() == "tensorflow":
+            if K.backend() == "tensorflow" and not force_softmax_calculation:
                 (predictions,) = predictions.op.inputs
                 loss = K.sparse_categorical_crossentropy(
                     labels, predictions, from_logits=True
