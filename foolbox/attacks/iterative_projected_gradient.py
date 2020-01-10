@@ -674,7 +674,7 @@ class L2BasicIterativeAttack(
         )
 
 
-class NormalizedProjectedGradientDescentAttack(
+class ProjectedGradientDescentAttack_L2(
     L2GradientMixin,
     L2ClippingMixin,
     L2DistanceCheckMixin,
@@ -737,6 +737,7 @@ class NormalizedProjectedGradientDescentAttack(
             a, binary_search, epsilon, stepsize, iterations, random_start, return_early
         )
 
+PGD_L2 = ProjectedGradientDescentAttack_L2
 
 class ProjectedGradientDescentAttack(
     LinfinityGradientMixin,
