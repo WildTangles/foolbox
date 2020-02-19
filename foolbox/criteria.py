@@ -156,25 +156,6 @@ class CombinedCriteria(Criterion):
                 return False
         return True
 
-class DummyCond(Criterion):
-    """Defines adversarials as inputs for which the predicted class
-    is not the original class.
-
-    See Also
-    --------
-    :class:`TopKMisclassification`
-
-    Notes
-    -----
-    Uses `numpy.argmax` to break ties.
-
-    """
-
-    def name(self):
-        return "DummyCond"
-
-    def is_adversarial(self, predictions, label):
-        return True
 
 class Misclassification(Criterion):
     """Defines adversarials as inputs for which the predicted class
